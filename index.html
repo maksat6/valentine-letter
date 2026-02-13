@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Valentine Letter</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet"/>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("heart-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: "Pixelify Sans", sans-serif;
+}
+
+/* Envelope Screen */
+#envelope-container {
+    text-align: center;
+    cursor:pointer;
+}
+
+@keyframes pulse {
+    0% { transform:scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+#envelope{
+    width: 200px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Letter Screen */
+#letter-container{
+    display: none;
+    position:fixed;
+    inset: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.letter-window{
+    width: 90vw;
+    max-width: 800px;
+    aspect-ratio: 3/2;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url("window.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 12px;
+    padding-top: 180px;
+    transform: scale(1.2);
+    opacity: 0;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.letter-window.open {
+    transform: scale(1);
+    opacity: 1;
+}
+
+h1 {
+    font-size: 30px;
+    margin:0;
+}
+
+p {
+    font-size: 40px;
+}
+
+.cat {
+    width: 250px;
+    margin: 10px 0;
+    transition: width 0.4s ease;
+}
+
+.letter-window.final .cat {
+    width: 180px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+}
+
+.btn {
+    width: 120px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.no-btn {
+    transition: transform 0.3s ease;
+}
+
+.final-text{
+    font-size: 22px;
+    line-height: 1.4;
+    text-align: center;
+    display: none;
+    padding: 10px 20px;
+    background-color: rgba(255,240,240,0.5);
+    border-radius: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="envelope-container">
+  <img src="envelope.png" alt="Envelope" id="envelope" />
+  <p>♡ Letter for You ♡</p>
+</div>
+
+<div id="letter-container">
+  <div class="letter-window">
+    <h1 id="letter-title">Will you be my Valentine?</h1>
+
+    <img src="cat_heart.gif" class="cat" id="letter-cat" />
+
+    <div class="buttons" id="letter-buttons">
+      <img src="yes.png" class="btn yes-btn" alt="Yes" />
+      <img src="no.png" class="btn no-btn" alt="No" />
+    </div>
+
+    <p id="final-text" class="final-text">
+      <strong>You are my BUSKA</strong> I love you, Ekaterina!
+    </p>
+  </div>
+</div>
+
+<script>
+// Elements
+const envelope = document.getElementById("envelope-container");
+const letter = document.getElementById("letter-container");
+const noBtn = document.querySelector(".no-btn");
+const yesBtn = document.querySelector(".yes-btn");
+
+const title = document.getElementById("letter-title");
+const catImg = document.getElementById("letter-cat");
+const buttons = document.getElementById("letter-buttons");
+const finalText = document.getElementById("final-text");
+
+// Open envelope
+envelope.addEventListener("click", () => {
+    envelope.style.display = "none";
+    letter.style.display = "flex";
+
+    setTimeout(() => {
+        document.querySelector(".letter-window").classList.add("open");
+    }, 50);
+});
+
+// Move NO button
+noBtn.addEventListener("mouseover", () => {
+    const distance = Math.random() * 200 + 100;
+    const angle = Math.random() * Math.PI * 2;
+
+    const moveX = Math.cos(angle) * distance;
+    const moveY = Math.sin(angle) * distance;
+
+    noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+});
+
+// YES clicked
+yesBtn.addEventListener("click", () => {
+    title.textContent = "Yippeeee! 💖";
+    catImg.src = "cat_dance.gif";
+
+    document.querySelector(".letter-window").classList.add("final");
+
+    buttons.style.display = "none";
+    finalText.style.display = "block";
+});
+</script>
+
+</body>
+</html>
